@@ -112,8 +112,9 @@ Use exit codes in CI pipelines to block deploys with critical incompatibilities.
 |------|-------------|
 | **abstract-audit** (this tool) | Catch EVM incompatibilities in your Solidity contracts |
 | [x402-fetch](https://github.com/LoserLab/x402-fetch) | HTTP client for x402 paid API endpoints on Abstract |
+| [abstract-gas](https://github.com/LoserLab/abstract-gas) | Estimate gas costs on Abstract vs Ethereum |
 
-**Recommended workflow:** `abstract-audit` (check contracts) -> fix issues -> deploy on Abstract.
+**Recommended workflow:** `abstract-audit` (check contracts) -> `abstract-gas` (estimate costs) -> deploy on Abstract.
 
 ## Author
 
