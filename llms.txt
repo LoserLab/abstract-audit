@@ -1,0 +1,39 @@
+# abstract-audit
+
+> Solidity contract and project scanner for Abstract (ZKsync L2). Catches EVM incompatibilities before deployment. Zero network requests, built-in rules, instant results.
+
+## Usage
+
+Install: `npx abstract-audit`
+
+Scan current project: `npx abstract-audit`
+JSON output for CI: `npx abstract-audit --json`
+Filter by severity: `npx abstract-audit --severity high`
+
+## What it catches
+
+### Solidity Source Issues
+- selfdestruct, callcode, extcodecopy, pc() (compile-time errors on ZKsync)
+- .transfer() and .send() (2300 gas stipend breaks on Abstract, all accounts are smart contracts)
+- ecrecover without EIP-1271 support (native account abstraction means not all signers use ECDSA)
+- block.coinbase (returns bootloader 0x8001), block.difficulty/prevrandao (returns constant)
+- gasleft() without pubdata cost accounting
+- extcodesize / tx.origin == msg.sender for EOA checks (unreliable, all accounts are contracts)
+- CREATE/CREATE2 in assembly (address derivation differs)
+
+### Config Issues
+- Standard solc instead of zksolc
+- Hardhat without @matterlabs/hardhat-zksync plugin
+- Deprecated individual @matterlabs/hardhat-zksync-* packages
+
+## Programmatic API
+
+```typescript
+import { scan, formatJson } from "abstract-audit";
+const result = scan("./path/to/project");
+console.log(formatJson(result));
+```
+
+## Related
+
+- [x402-fetch](https://github.com/LoserLab/x402-fetch): HTTP client for x402 paid API endpoints on Abstract

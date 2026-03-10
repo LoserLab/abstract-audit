@@ -1,0 +1,53 @@
+{
+  "name": "abstract-audit",
+  "version": "0.1.0",
+  "description": "Solidity contract and project scanner for Abstract (ZKsync L2). Catches EVM incompatibilities before deployment.",
+  "bin": {
+    "abstract-audit": "./dist/bin/abstract-audit.js"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [
+    "abstract",
+    "zksync",
+    "solidity",
+    "audit",
+    "evm",
+    "smart-contracts",
+    "layer2",
+    "zksolc"
+  ],
+  "author": "heathen",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LoserLab/abstract-audit"
+  },
+  "dependencies": {
+    "commander": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "playwright": "^1.58.2",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0"
+  }
+}

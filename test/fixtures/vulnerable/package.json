@@ -1,0 +1,7 @@
+{
+  "name": "vulnerable-project",
+  "version": "1.0.0",
+  "devDependencies": {
+    "hardhat": "^2.19.0"
+  }
+}

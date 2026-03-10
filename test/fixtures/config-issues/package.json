@@ -1,0 +1,9 @@
+{
+  "name": "config-issues-project",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@matterlabs/hardhat-zksync-solc": "^1.0.0",
+    "@matterlabs/hardhat-zksync-deploy": "^1.0.0",
+    "hardhat": "^2.19.0"
+  }
+}
