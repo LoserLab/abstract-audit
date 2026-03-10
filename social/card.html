@@ -20,7 +20,7 @@
   .card {
     width: 1200px;
     height: 628px;
-    background: #060A08;
+    background: #FAFAFA;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -33,8 +33,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 214, 97, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 214, 97, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(0, 214, 97, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 214, 97, 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
     z-index: 1;
@@ -46,39 +46,28 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #00D661 0%, #00F080 50%, #00D661 100%);
+    background: linear-gradient(90deg, #0A0A0A 0%, #00D661 50%, #0A0A0A 100%);
     z-index: 10;
   }
 
   .glow-top {
     position: absolute;
-    top: -180px;
-    right: 20%;
+    top: -200px;
+    right: 15%;
     width: 600px;
     height: 400px;
-    background: radial-gradient(ellipse, rgba(0, 214, 97, 0.1) 0%, rgba(0, 214, 97, 0.03) 50%, transparent 70%);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .glow-bottom {
-    position: absolute;
-    bottom: -100px;
-    left: 20%;
-    width: 500px;
-    height: 300px;
-    background: radial-gradient(ellipse, rgba(0, 214, 97, 0.04) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(0, 214, 97, 0.06) 0%, transparent 70%);
     pointer-events: none;
     z-index: 2;
   }
 
   .glow-corner {
     position: absolute;
-    bottom: -60px;
+    bottom: -80px;
     right: -40px;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, rgba(0, 214, 97, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(0, 214, 97, 0.04) 0%, transparent 70%);
     pointer-events: none;
     z-index: 2;
   }
@@ -96,12 +85,12 @@
     pointer-events: none;
     z-index: 2;
     user-select: none;
-    color: rgba(255, 255, 255, 0.04);
+    color: rgba(0, 0, 0, 0.04);
   }
 
-  .code-bg .c-red { color: rgba(255, 80, 60, 0.09); }
-  .code-bg .c-green { color: rgba(0, 214, 97, 0.08); }
-  .code-bg .c-dim { color: rgba(255, 255, 255, 0.03); }
+  .code-bg .c-red { color: rgba(200, 30, 20, 0.08); }
+  .code-bg .c-green { color: rgba(0, 180, 80, 0.07); }
+  .code-bg .c-dim { color: rgba(0, 0, 0, 0.03); }
 
   .brand {
     position: absolute;
@@ -117,7 +106,7 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 13px;
     font-weight: 600;
-    color: #FFFFFF;
+    color: #0A0A0A;
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
@@ -125,7 +114,7 @@
   .brand-line {
     width: 32px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.15);
   }
 
   .brand-type {
@@ -156,14 +145,14 @@
     height: 5px;
     background: #00D661;
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0, 214, 97, 0.5);
+    box-shadow: 0 0 8px rgba(0, 214, 97, 0.4);
   }
 
   .badge-text {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 600;
-    color: #00D661;
+    color: #00A84D;
     letter-spacing: 0.08em;
   }
 
@@ -186,36 +175,33 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
     font-weight: 600;
-    color: #FF5040;
+    color: #C81E14;
     text-decoration: line-through;
-    text-decoration-color: rgba(255, 80, 64, 0.6);
+    text-decoration-color: rgba(200, 30, 20, 0.5);
   }
 
   .title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 72px;
     font-weight: 700;
-    color: #FFFFFF;
+    color: #0A0A0A;
     letter-spacing: -0.045em;
     line-height: 1;
   }
 
   .title .dim {
-    color: rgba(255, 255, 255, 0.25);
+    color: rgba(0, 0, 0, 0.2);
   }
 
   .title .accent {
-    background: linear-gradient(135deg, #00D661, #00F080);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #00D661;
   }
 
   .subtitle {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 18px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(0, 0, 0, 0.4);
     line-height: 1.5;
   }
 
@@ -224,7 +210,7 @@
     align-items: flex-end;
     justify-content: space-between;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
   }
 
   .pills {
@@ -244,13 +230,13 @@
   .pill-green {
     background: rgba(0, 214, 97, 0.08);
     border: 1px solid rgba(0, 214, 97, 0.25);
-    color: #00D661;
+    color: #00A84D;
   }
 
-  .pill-dim {
-    background: rgba(0, 214, 97, 0.04);
-    border: 1px solid rgba(0, 214, 97, 0.12);
-    color: rgba(0, 214, 97, 0.6);
+  .pill-dark {
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .bottom-right {
@@ -264,7 +250,7 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 11px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.15);
+    color: rgba(0, 0, 0, 0.2);
     letter-spacing: 0.02em;
   }
 
@@ -272,7 +258,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(0, 0, 0, 0.25);
   }
 </style>
 </head>
@@ -281,7 +267,6 @@
   <div class="grid"></div>
   <div class="top-line"></div>
   <div class="glow-top"></div>
-  <div class="glow-bottom"></div>
   <div class="glow-corner"></div>
 
   <div class="code-bg"><span class="c-dim">// SPDX-License-Identifier: MIT</span>
@@ -330,9 +315,9 @@
       <div class="pills">
         <span class="pill pill-green">17 Rules</span>
         <span class="pill pill-green">Solidity Scanner</span>
-        <span class="pill pill-dim">Config Checker</span>
-        <span class="pill pill-dim">CI-Ready</span>
-        <span class="pill pill-dim">MIT License</span>
+        <span class="pill pill-dark">Config Checker</span>
+        <span class="pill pill-dark">CI-Ready</span>
+        <span class="pill pill-dark">MIT License</span>
       </div>
       <div class="bottom-right">
         <span class="built-in">Built in Mirra</span>
