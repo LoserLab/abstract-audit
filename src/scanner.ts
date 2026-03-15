@@ -2,7 +2,14 @@ import { readFileSync, existsSync, readdirSync, statSync } from "fs";
 import { join, relative } from "path";
 import { solidityRules } from "./rules/solidity";
 import { configRules, CFG002 } from "./rules/config";
-import type { Issue, ScanResult, Severity } from "./rules/types";
+import type { Issue, Rule, ScanResult, Severity } from "./rules/types";
+
+const SEVERITY_ORDER: Record<Severity, number> = {
+  critical: 0,
+  high: 1,
+  moderate: 2,
+  info: 3,
+};
 
 const CONFIG_FILES = [
   "hardhat.config.ts",
@@ -65,7 +72,7 @@ function scanLine(
   content: string,
   lineNum: number,
   filePath: string,
-  rules: typeof solidityRules,
+  rules: Rule[],
 ): Issue[] {
   const issues: Issue[] = [];
 
@@ -95,14 +102,6 @@ function scanLine(
  * keep only the higher severity one.
  */
 function deduplicateIssues(issues: Issue[]): Issue[] {
-  const severityOrder: Record<Severity, number> = {
-    critical: 0,
-    high: 1,
-    moderate: 2,
-    info: 3,
-  };
-
-  // Group by file + line + match
   const groups = new Map<string, Issue[]>();
   for (const issue of issues) {
     const key = `${issue.file}:${issue.line}:${issue.match}`;
@@ -116,9 +115,8 @@ function deduplicateIssues(issues: Issue[]): Issue[] {
     if (group.length === 1) {
       result.push(group[0]);
     } else {
-      // Keep the highest severity issue from this group
       group.sort(
-        (a, b) => severityOrder[a.severity] - severityOrder[b.severity],
+        (a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity],
       );
       result.push(group[0]);
     }
@@ -164,8 +162,8 @@ export function scan(targetDir: string): ScanResult {
   }
 
   const issues: Issue[] = [];
+  let skippedFiles = 0;
 
-  // ── Scan Solidity files ───────────────────────────────────
   const solFiles = collectFiles(targetDir, (name) => name.endsWith(".sol"));
 
   for (const filePath of solFiles) {
@@ -174,6 +172,7 @@ export function scan(targetDir: string): ScanResult {
     try {
       content = readFileSync(filePath, "utf8");
     } catch {
+      skippedFiles++;
       continue;
     }
 
@@ -212,6 +211,7 @@ export function scan(targetDir: string): ScanResult {
     try {
       content = readFileSync(configPath, "utf8");
     } catch {
+      skippedFiles++;
       continue;
     }
 
@@ -260,18 +260,10 @@ export function scan(targetDir: string): ScanResult {
     });
   }
 
-  // Deduplicate
   const dedupedIssues = deduplicateIssues(issues);
 
-  // Sort by severity
-  const severityOrder: Record<Severity, number> = {
-    critical: 0,
-    high: 1,
-    moderate: 2,
-    info: 3,
-  };
   dedupedIssues.sort(
-    (a, b) => severityOrder[a.severity] - severityOrder[b.severity],
+    (a, b) => SEVERITY_ORDER[a.severity] - SEVERITY_ORDER[b.severity],
   );
 
   const summary: Record<Severity, number> = {
@@ -284,12 +276,15 @@ export function scan(targetDir: string): ScanResult {
     summary[issue.severity]++;
   }
 
+  const exitCode = summary.critical > 0 ? 2 : dedupedIssues.length > 0 ? 1 : 0;
+
   return {
     version: "0.1.0",
     issues: dedupedIssues,
     summary,
-    totalFiles: solFiles.length + configFiles.length,
+    totalFiles: solFiles.length + configFiles.length - skippedFiles,
     solidityFiles: solFiles.length,
     configFiles: configFiles.length,
+    exitCode,
   };
 }

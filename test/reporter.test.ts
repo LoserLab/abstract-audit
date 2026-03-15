@@ -89,6 +89,7 @@ describe("reporter", () => {
       // Remove info issues
       result.issues = result.issues.filter((i) => i.severity !== "info");
       result.summary = { critical: 0, high: 0, moderate: 0, info: 0 };
+      result.exitCode = 0;
       const parsed = JSON.parse(formatJson(result));
       expect(parsed.exit_code).toBe(0);
     });

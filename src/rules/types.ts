@@ -40,4 +40,5 @@ export interface ScanResult {
   totalFiles: number;
   solidityFiles: number;
   configFiles: number;
+  exitCode: number;
 }

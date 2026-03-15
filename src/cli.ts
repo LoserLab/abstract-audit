@@ -6,7 +6,7 @@ import type { Severity } from "./rules/types";
 
 const SEVERITY_ORDER: Severity[] = ["critical", "high", "moderate", "info"];
 
-export async function cli(argv: string[]): Promise<void> {
+export function cli(argv: string[]): void {
   const program = new Command();
 
   program
@@ -28,35 +28,34 @@ export async function cli(argv: string[]): Promise<void> {
       try {
         const result = scan(resolvedPath);
 
-        // Filter by severity
-        const minSeverity = opts.severity as Severity;
-        const minIndex = SEVERITY_ORDER.indexOf(minSeverity);
+        const minSeverity = opts.severity as string;
+        const minIndex = SEVERITY_ORDER.indexOf(minSeverity as Severity);
+        if (minIndex < 0) {
+          console.error(`Invalid severity level: ${minSeverity}`);
+          process.exit(1);
+        }
         if (minIndex > 0) {
           result.issues = result.issues.filter(
             (i) => SEVERITY_ORDER.indexOf(i.severity) <= minIndex,
           );
-          // Recount
           result.summary = { critical: 0, high: 0, moderate: 0, info: 0 };
           for (const issue of result.issues) {
             result.summary[issue.severity]++;
           }
         }
 
-        // Output
         if (opts.json) {
           console.log(formatJson(result));
         } else {
           console.log(formatHuman(result));
         }
 
-        // Exit code
-        if (result.summary.critical > 0) {
-          process.exit(2);
-        } else if (result.summary.high > 0 || result.summary.moderate > 0) {
-          process.exit(1);
+        if (result.exitCode > 0) {
+          process.exit(result.exitCode);
         }
-      } catch (err: any) {
-        console.error(`Error: ${err.message}`);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        console.error(`Error: ${msg}`);
         process.exit(1);
       }
     });
