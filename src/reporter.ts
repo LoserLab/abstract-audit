@@ -64,7 +64,7 @@ export function formatJson(result: ScanResult): string {
       version: result.version,
       issues: result.issues,
       summary: result.summary,
-      exit_code: result.summary.critical > 0 ? 2 : result.issues.length > 0 ? 1 : 0,
+      exit_code: result.exitCode,
     },
     null,
     2,
